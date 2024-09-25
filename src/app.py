@@ -3,6 +3,7 @@ import bcrypt
 import os
 import time
 import uuid
+from fpdf import FPDF
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 import database as db
@@ -225,7 +226,7 @@ def EditarPerfilUsuario():
                                     telefonousuario = %s
                                     WHERE usuariousuario = %s""", (usuarioactual, email, numerodocumento, telefono, usuario))
                     db.database.commit()
-                    return redirect(url_for('PerfilUsuario'))
+                    return redirect(url_for('InicioSesion'))
                 else:
                     print("Faltan datos")
                     redirect(url_for('InicioUsuario'))
@@ -297,7 +298,24 @@ def guardar_imagen(imagen):
 # --------------------------------------------------- Perfil Admin
 @app.route('/admin/perfil')
 def PerfilAdmin():
-    return render_template('PerfilAdmin.html')
+    cursor = db.database.cursor(dictionary=True)
+    cursor.execute("""SELECT
+                        usuariousuario,
+                        emailusuario,
+                        telefonousuario,
+                        numerodocumentousuario
+                        FROM usuario""")
+    usuarios = cursor.fetchall()
+    return render_template('PerfilAdmin.html', usuarios=usuarios)
+
+@app.route('/admin/perfil/eliminar/<numerodocumentousuario>')
+def EliminarPerfilAdmin(numerodocumentousuario):
+    cursor = db.database.cursor(dictionary=True, buffered=True)
+    cursor.execute("""DELETE FROM usuario WHERE numerodocumentousuario = %s""", (numerodocumentousuario,))
+    db.database.commit()
+    return redirect(url_for('PerfilAdmin'))
+    
+
 # --------------------------------------------------diccionario
 @app.route('/admin/diccionario')
 def Diccionario_datos_bd_sistemaciclassena():
@@ -306,6 +324,69 @@ def Diccionario_datos_bd_sistemaciclassena():
 
 #--------------------------------------------------- Contraseña para session
 app.secret_key = 'ciclassena'
+
+# imprecion de factura
+def impresion_factura():
+    class PDF(FPDF):
+        def header(self):
+            self.set_font('Arial', 'B', 12)
+            self.cell(0, 10, 'Factura', 0, 1, 'C')
+
+        def footer(self):
+            self.set_y(-15)
+            self.set_font('Arial', 'I', 8)
+            self.cell(0, 10, f'Página {self.page_no()}', 0, 0, 'C')
+
+        def create_invoice(self, invoice_number, date, customer_name, items):
+            self.add_page()
+
+            # Información de la factura
+            self.set_font('Arial', '', 12)
+            self.cell(0, 10, f'Factura #: {invoice_number}', 0, 1)
+            self.cell(0, 10, f'Fecha: {date}', 0, 1)
+            self.cell(0, 10, f'Cliente: {customer_name}', 0, 1)
+            self.ln(10)
+
+            # Encabezados de la tabla
+            self.set_font('Arial', 'B', 12)
+            self.cell(90, 10, 'Descripción', 1)
+            self.cell(30, 10, 'Cantidad', 1)
+            self.cell(30, 10, 'Precio', 1)
+            self.cell(30, 10, 'Total', 1)
+            self.ln()
+
+            # Detalles de los ítems
+            self.set_font('Arial', '', 12)
+            total_amount = 0
+            for item in items:
+                description, quantity, price = item
+                total = quantity * price
+                total_amount += total
+                self.cell(90, 10, description, 1)
+                self.cell(30, 10, str(quantity), 1)
+                self.cell(30, 10, f'{price:.2f}', 1)
+                self.cell(30, 10, f'{total:.2f}', 1)
+                self.ln()
+
+            # Total final
+            self.cell(150, 10, 'Total', 1)
+            self.cell(30, 10, f'{total_amount:.2f}', 1)
+
+    # Datos de la factura
+    invoice_number = "001"
+    date = "2024-09-25"
+    customer_name = "Juan Pérez"
+    items = [
+        ("Producto A", 2, 15.00),
+        ("Producto B", 1, 25.00),
+        ("Producto C", 3, 10.00),
+    ]
+
+    # Crear el PDF
+    pdf = PDF()
+    pdf.create_invoice(invoice_number, date, customer_name, items)
+    pdf.output("factura.pdf")
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

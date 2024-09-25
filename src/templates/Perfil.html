@@ -21,6 +21,7 @@
     </nav>
     
     <main class="container">
+        <img class="logo" src="{{ url_for('static', filename='img/SENAtour_sin_fondo.png') }}" alt="Inicio de Sesión">
         <div class="contenedor-perfil">
             <form action="{{ url_for('EditarPerfilUsuario') }}" class="formulario" method="POST">
                 <h1 class="title">Editar Perfil de {{ usuario }}</h1>
