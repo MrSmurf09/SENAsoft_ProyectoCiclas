@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0; 
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../img/iamgen_inicio.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    padding: 12px;
+    gap: 16px;
+    align-items: center;
+    width: 42%;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba(165, 165, 165, 0.86);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.text {
+    text-align: center;
+}
+
+.form_login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.title {
+    text-align: center;
+    padding: 20px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.enfrentar_input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.alinear_select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 46%;
+    gap: 8px;
+}
+
+.input {
+    width: 42%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.input:focus {
+    border: 2px solid #007bff;
+}
+
+.select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #757575;
+}
+
+.container_botones {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 12px;
+}
+
+.btn {
+    width: 22%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    background-color: #5E4775;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #5e477591;
+    width: 23%;
+}
+
+.logo {
+    position: absolute;
+    bottom: -10vh;
+    width: 45vw;
+    left: 51%;
+    transform: translate(-50%);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .login {
+        width: 50%; /* Slightly wider on smaller screens */
+    }
+    .logo {
+        width: 40vh; /* Adjust position */
+        bottom: 6vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .login {
+        width: 80%; /* More space on smaller screens */
+    }
+
+    .input {
+        width: 80%; /* Input fields take more space */
+    }
+
+    .select {
+        width: 84%;
+    }
+
+    .btn {
+        width: 50%; /* Buttons become larger for better touch interaction */
+    }
+
+    .container_botones {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 8px; /* Reduce gap between buttons */
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .login {
+        width: 90%; /* Max width on very small screens */
+        padding: 20px; /* Increase padding for better spacing */
+    }
+
+    .title {
+        font-size: 24px; /* Reduce title size */
+    }
+
+    .input {
+        width: 90%; /* Inputs take almost full width */
+    }
+
+    .select {
+        width: 94%;
+    }
+
+    .btn {
+        width: 80%; /* Buttons take more space */
+    }
+
+    .logo {
+        width: 60vw; /* Adjust position */
+        bottom: 15vh;
+    }
+}
+
+@media (max-width: 375px) {
+    .logo {
+        width: 70vw; /* Adjust position */
+        bottom: 5vh;
+    }
+}

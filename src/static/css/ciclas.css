@@ -1,0 +1,41 @@
+.contenedor-ciclas {
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    padding: 12px;
+    gap: 16px;
+    align-items: center;
+    width: 42%;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba(165, 165, 165, 0.86);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.container {
+    background-image: url("../img/ciclas.jpg") !important;
+}
+
+.title {
+    text-align: center;
+    padding: 20px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.enfrentar_input2 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 16px;
+}

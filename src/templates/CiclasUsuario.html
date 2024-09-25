@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarlateral.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosgenerales.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ciclas.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/InicioSesion.css') }}">
+    <title>SENAtourt</title>
+</head>
+<body>
+    <!-- Navbar lateral -->
+    <nav class="navbar_lateral">
+        <ul class="lista_elementos">
+            <li class="elemento_navbar"><a href="{{url_for('InicioUsuario')}}"><img src="{{ url_for('static', filename='img/menu.png') }}" alt="menu">Inicio</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('CiclasUsuario') }}"><img src="{{ url_for('static', filename='img/bicicleta.png') }}" alt="bicicletas">Ciclas</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('PerfilUsuario') }}"><img src="{{ url_for('static', filename='img/perfil.png') }}" alt="perfil">Perfil<br>{{ usuario }}</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('EventosUsuario') }}"><img src="https://cdn-icons-png.flaticon.com/512/1968/1968790.png" alt="eventos">Eventos</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('Logout') }}"><img src="https://cdn-icons-png.flaticon.com/512/25/25706.png" alt="salir">SALIR</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('marcacicla').addEventListener('change', actualizarPrecio);
+
+        function actualizarPrecio() {
+            const marca = document.getElementById('marcacicla').value;
+
+            // Solo hace la solicitud si ambos valores están seleccionados
+            if (marca) {
+                switch (marca) {
+                    case 'Trek':
+                        document.getElementById('precioalquilercicla').value = 12000;
+                        break;
+                    case 'Giant':
+                        document.getElementById('precioalquilercicla').value = 15000;
+                        break;
+                    case 'Specialized':
+                        document.getElementById('precioalquilercicla').value = 20000;
+                        break;
+                    case 'Cannondale':
+                        document.getElementById('precioalquilercicla').value = 25000;
+                        break;
+                    case 'Bianchi':
+                        document.getElementById('precioalquilercicla').value = 30000;
+                        break;
+                }
+            }
+        }
+    </script>
+
+    <main class="container">
+        <div class="contenedor-ciclas">
+            <form action="{{ url_for('AlquilarCiclasUsuario') }}" class="formulario" method="POST">
+                <h1 class="title">Alquilar Ciclas</h1>
+                <div class="enfrentar_input">
+                    <select name="colorcicla" id="colorcicla" class="select" required>
+                        <option value="" selected disabled>Seleccione el Color</option>
+                        {% for color in colorciclas %}
+                            <option value="{{color.colorcicla}}">{{color.colorcicla}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="marcacicla" id="marcacicla" class="select" onchange="actualizarPrecio()" required>
+                        <option value="" selected disabled>Seleccione su cicla</option>
+                        {% for marca in marcaciclas %}
+                            <option value="{{marca.marcacicla}}">{{marca.marcacicla}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="enfrentar_input2">
+                    <input class="input" type="number" id="precioalquilercicla" name="precioalquilercicla" placeholder="Cobro Alquiler" readonly>
+                    <button type="submit" class="btn">Alquilar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    
+</body>
+</html>

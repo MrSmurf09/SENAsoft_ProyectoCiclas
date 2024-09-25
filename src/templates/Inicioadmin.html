@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/navbarlateral.css') }}"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosgenerales.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inicioadmin.css') }}">
+    <title>SENAtourt</title>
+  </head>
+  <body>
+    <!-- Navbar lateral -->
+    <nav class="navbar_lateral">
+      <ul class="lista_elementos">
+        <li class="elemento_navbar">
+          <a href="{{ url_for('InicioAdmin') }}"
+            ><img
+              src="{{ url_for('static', filename='img/menu.png') }}"
+              alt="menu"
+            />Inicio</a
+          >
+        </li>
+        <li class="elemento_navbar">
+          <a href="{{ url_for('CiclasAdmin') }}"
+            ><img
+              src="{{ url_for('static', filename='img/bicicleta.png') }}"
+              alt="bicicletas"
+            />Ciclas</a
+          >
+        </li>
+        <li class="elemento_navbar">
+          <a href="{{ url_for('PerfilAdmin') }}"
+            ><img
+              src="{{ url_for('static', filename='img/perfil.png') }}"
+              alt="perfil"
+            />Perfiles</a
+          >
+        </li>
+        <li class="elemento_navbar">
+          <a href="{{ url_for('EventosAdmin') }}"
+            ><img
+              src="https://cdn-icons-png.flaticon.com/512/1968/1968790.png"
+              alt="eventos"
+            />Eventos</a
+          >
+        </li>
+        <li class="elemento_navbar">
+          <a href="{{ url_for('Diccionario_datos_bd_sistemaciclassena')}}"
+            ><img
+              src="{{ url_for('static', filename='img/diccionario.png') }}"
+              alt="diccionario"
+            />Dicc de datos</a
+          >
+        </li>
+        <li class="elemento_navbar">
+          <a href="{{ url_for('Logout') }}"
+            ><img
+              src="{{ url_for('static', filename='img/salir.png') }}"
+              alt="salir"
+            />SALIR</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Bienvenido</h1>
+      <hr>
+      <p>Bienvenido a SENAtour una aplicación web para el manejo de renta de bicicletas y paseos de ciclismo.</p>
+      <p>Estas en la cuenta de administrador:</p>
+      <ul>
+        <li>Nombre de usuario: admin</li>
+        <li>Contraseña: admin</li>
+      </ul>
+    </div>
+
+  </body>
+</html>

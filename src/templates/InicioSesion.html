@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/InicioSesion.css') }}">
+    <title>SENAtourt</title>
+</head>
+<body>
+    <main class="container">
+        <div class="login">
+            <div class="text">
+                <h1 class="title">Inicio de Sesión</h1>
+                <span>SENAtourt</span>
+            </div>
+            <form class="form_login" action="{{ url_for('Login')}}" method="post">
+                <input class="input" type="text" name="usuariousuario" placeholder="Nombre de Usuario">
+                <input class="input" type="password" name="contraseñausuario" placeholder="Ingrese su Contraseña">
+                <div class="container_botones">
+                    <button type="submit" class="btn">Iniciar Sesión</button>
+                    <a href="{{ url_for('Registrarse') }}" class="btn">Crear Cuenta</a>
+                </div>
+            </form>
+        </div>
+        <img class="logo" src="{{ url_for('static', filename='img/SENAtour_sin_fondo.png') }}" alt="Inicio de Sesión">
+    </main>
+</body>
+</html>

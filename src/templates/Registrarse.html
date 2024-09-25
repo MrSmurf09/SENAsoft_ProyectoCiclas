@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/InicioSesion.css') }}">
+    <title>SENAtourt</title>
+</head>
+<body>
+    <main class="container">
+        <div class="login">
+            <div class="text">
+                <h1 class="title">Registrarse</h1>
+                <span>SENAtourt</span>
+            </div>
+            <form class="form_login" action="{{ url_for('RegistrarUsuario') }}" method="POST">
+                <div class="enfrentar_input">
+                    <input class="input" type="text" name="usuariousuario" placeholder="Nombre de Usuario">
+                    <input class="input" type="password" name="contraseñausuario" placeholder="Ingrese su Contraseña">
+                </div>
+                <div class="enfrentar_input">
+                    <div class="alinear_select">
+                        <select class="select" name="tipodocumentousuario" required>
+                            <option value="" selected disabled>Tipo de Documento</option>
+                            <option value="TI">T.I</option>
+                            <option value="C.C">C.C</option>
+                        </select>
+                    </div>
+                    <div class="alinear_select">
+                        <select class="select" name="estratousuario" required>
+                            <option value="" selected disabled>Seleccione su Estrato</option>
+                            {% for i in range(1, 7) %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="enfrentar_input">
+                    <input class="input" type="number" name="numerodocumentousuario" placeholder="Ingrese su Numero de Cedula">
+                    <input class="input" type="number" name="telefonousuario" placeholder="Ingrese su Telefono">
+                </div>
+                <div class="enfrentar_input">
+                    <input class="input" type="text" name="emailusuario" placeholder="Ingrese su Correo">
+                    <div class="alinear_select">
+                        <select name="rolusuario" class="select" required>
+                            <option value="" selected disabled>Seleccione su Rol</option>
+                            <option value="Funcionario">Funcionario</option>
+                            <option value="Aprendiz">Aprendiz</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="container_botones">
+                    <button type="submit" class="btn">Crear Cuenta</button>
+                </div>
+            </form>
+        </div>
+        <img class="logo" src="{{ url_for('static', filename='img/SENAtour_sin_fondo.png') }}" alt="Inicio de Sesión">
+    </main>
+</body>
+</html>

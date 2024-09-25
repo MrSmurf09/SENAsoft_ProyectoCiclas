@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/navbarlateral.css') }}"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosgenerales.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inicioadmin.css') }}">
+    <title>SENAtourt</title>
+  </head>
+  <body>
+    <!-- Navbar lateral -->
+    <nav class="navbar_lateral">
+        <button type="radio" >hola</button>
+        <ul class="lista_elementos">
+            <li class="elemento_navbar"><a href="{{url_for('InicioUsuario')}}"><img src="{{ url_for('static', filename='img/menu.png') }}" alt="menu">Inicio</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('CiclasUsuario') }}"><img src="{{ url_for('static', filename='img/bicicleta.png') }}" alt="bicicletas">Ciclas</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('PerfilUsuario') }}"><img src="{{ url_for('static', filename='img/perfil.png') }}" alt="perfil">Perfil<br>{{ usuario }}</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('EventosUsuario') }}"><img src="https://cdn-icons-png.flaticon.com/512/1968/1968790.png" alt="eventos">Eventos</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('Logout') }}"><img src="https://cdn-icons-png.flaticon.com/512/25/25706.png" alt="salir">SALIR</a></li>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Bienvenido {{ usuario }}</h1>
+      <hr>
+      <p>Bienvenido a SENAtour una aplicación web para el manejo de renta de bicicletas y paseos de ciclismo.</p>
+    </div>
+
+  </body>
+</html>

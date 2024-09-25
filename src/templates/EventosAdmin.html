@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarlateral.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/eventosadmin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/InicioSesion.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosgenerales.css') }}">
+    
+    <title>SENAtourt</title>
+</head>
+<body>
+    <!-- Navbar lateral -->
+    <nav class="navbar_lateral">
+        <ul class="lista_elementos">
+            <li class="elemento_navbar"><a href="{{url_for('InicioAdmin')}}"><img src="{{ url_for('static', filename='img/menu.png') }}" alt="menu">Inicio</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('CiclasAdmin') }}"><img src="{{ url_for('static', filename='img/bicicleta.png') }}" alt="bicicletas">Ciclas</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('PerfilAdmin') }}"><img src="{{ url_for('static', filename='img/perfil.png') }}" alt="perfil">Perfiles</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('EventosAdmin') }}"><img src="https://cdn-icons-png.flaticon.com/512/1968/1968790.png" alt="eventos">Eventos</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('Diccionario_datos_bd_sistemaciclassena')}}"><img src="{{ url_for('static', filename='img/diccionario.png') }}" alt="diccionario">Dicc de datos</a></li>
+            <li class="elemento_navbar"><a href="{{ url_for('Logout') }}"><img src="https://cdn-icons-png.flaticon.com/512/25/25706.png" alt="salir">SALIR</a></li>
+        </ul>
+    </nav>
+    <main class="cont_eventos">
+        <div class="login">
+            <div class="text">
+                <h1 class="title">Crear Evento
+                    <span>para el SENAtour</span>
+                </h1>
+            </div>
+            <form class="form_login" action="{{ url_for('crear_eventos') }}" method="POST" enctype="multipart/form-data">
+                <div class="enfrentar_input">
+                    <input class="input titulo" type="text" name="tituloevento" placeholder="Título Evento" required>
+                    <textarea class="input" name="descripcionevento" placeholder="Descripción Evento" required></textarea>
+                    <input class="input" type="datetime-local" name="fechahoraevento" placeholder="Fecha y Hora Evento" required>
+                    <input class="input" type="text" name="ubicacionevento" placeholder="Ubicación Evento" required>
+                    <input class="input titulo" type="file" name="imagenevento" accept="image/*" required>
+                    <button type="submit" class="btn">Crear Evento</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

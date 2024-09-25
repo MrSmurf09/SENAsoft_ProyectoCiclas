@@ -1,0 +1,36 @@
+.login {
+    height: auto !important;
+}
+body{
+    background-image: url("../img/fondoeventos.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+.cont_eventos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://cdnwordpresstest-f0ekdgevcngegudb.z01.azurefd.net/es/wp-content/uploads/2024/08/Feria_a_ritmo_Bici_1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+.enfrentar_input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.enfrentar_input textarea {
+    width: 90%;
+    height: 10vh;
+}
+.enfrentar_input .titulo {
+    width: 90%;
+}
