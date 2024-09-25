@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarlateral.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfilesadmin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosgenerales.css') }}">
     <title>SENAtourt</title>
 </head>
 <body>
@@ -20,23 +22,26 @@
     </nav>
 
     <main class="container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Edad</th>
-                    <th>Ciudad</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Juan Pérez</td>
-                    <td>28</td>
-                    <td>Madrid</td>
-                </tr>
-            </tbody>
-        </table>
-        
+        <div class="contenedor-tabla">
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Ciudad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Juan Pérez</td>
+                        <td>28</td>
+                        <td>Madrid</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
 
     </main>
 </body>
