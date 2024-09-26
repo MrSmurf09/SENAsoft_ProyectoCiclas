@@ -1,24 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Vista 1</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tablas.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosgenerales.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarlateral.css') }}">
-    <title>SENAtour</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/utils.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}">
+    <!-- Incluye el CSS de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        .map {
+            height: 90%;
+            width: 90%;
+        }
+    </style>
 </head>
+
 <body>
-    <div>
-        <!-- Navbar lateral -->
+    <div class="container">
         <nav class="navbar_lateral">
             <ul class="lista_elementos">
-                <li class="elemento_navbar"><a href="{{url_for('InicioAdmin')}}"><img src="{{ url_for('static', filename='img/menu.png') }}" alt="menu">Inicio</a></li>
-                <li class="elemento_navbar"><a href="{{ url_for('CiclasAdmin') }}"><img src="{{ url_for('static', filename='img/bicicleta.png') }}" alt="bicicletas">Ciclas</a></li>
-                <li class="elemento_navbar"><a href="{{ url_for('PerfilAdmin') }}"><img src="{{ url_for('static', filename='img/perfil.png') }}" alt="perfil">Perfiles</a></li>
-                <li class="elemento_navbar"><a href="{{ url_for('EventosAdmin') }}"><img src="https://cdn-icons-png.flaticon.com/512/1968/1968790.png" alt="eventos">Eventos</a></li>
-                <li class="elemento_navbar"><a href="{{ url_for('Diccionario_datos_bd_sistemaciclassena') }}"><img src="{{ url_for('static', filename='img/diccionario.png') }}" alt="diccionario">Dicc de datos</a></li>
-                <li class="elemento_navbar"><a href="{{ url_for('Logout') }}"><img src="https://cdn-icons-png.flaticon.com/512/25/25706.png" alt="salir">SALIR</a></li>
+                <!-- Navegación -->
+                <li class="elemento_navbar"><a href="{{url_for('InicioAdmin')}}"><img
+                            src="{{ url_for('static', filename='img/menu.png') }}" alt="menu">Inicio</a></li>
+                <li class="elemento_navbar"><a href="{{ url_for('CiclasAdmin') }}"><img
+                            src="{{ url_for('static', filename='img/bicicleta.png') }}" alt="bicicletas">Ciclas</a></li>
+                <li class="elemento_navbar"><a href="{{ url_for('PerfilAdmin') }}"><img
+                            src="{{ url_for('static', filename='img/perfil.png') }}" alt="perfil">Perfiles</a></li>
+                <li class="elemento_navbar"><a href="{{ url_for('EventosAdmin') }}"><img
+                            src="https://cdn-icons-png.flaticon.com/512/1968/1968790.png" alt="eventos">Eventos</a></li>
+                <li class="elemento_navbar"><a href="{{ url_for('Diccionario_datos_bd_sistemaciclassena')}}"><img
+                            src="{{ url_for('static', filename='img/diccionario.png') }}" alt="diccionario">Dicc de
+                        datos</a></li>
+                <li class="elemento_navbar"><a href="{{ url_for('Logout') }}"><img
+                            src="https://cdn-icons-png.flaticon.com/512/25/25706.png" alt="salir">SALIR</a></li>
             </ul>
         </nav>
+
+        <div class="limiter">
+            <input type="text" name="buscarciclas" class="input" placeholder="Buscar...">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100">
+                        <table>
+                            <thead>
+                                <tr class="table100-head">
+                                    <th class="column1">Usuario</th>
+                                    <th class="column1">Marca</th>
+                                    <th class="column2">Color</th>
+                                    <th class="column3">Estado</th>
+                                    <th class="column4">Precio Alquiler</th>
+                                    <th class="column5">Ver Mas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cicla in ciclas %}
+                                <tr>
+                                    <td class="column1">{{ cicla.usuariousuario }}</td>
+                                    <td class="column2">{{ cicla.marcacicla }}</td>
+                                    <td class="column3">{{ cicla.colorcicla }}</td>
+                                    <td class="column4">{{ cicla.estadocicla }}</td>
+                                    <td class="column5">{{ cicla.cobroalquiler }}</td>
+                                    <td><button class="btn" id="btn-edit{{ cicla.usuariousuario }}">Ver Mas</button>
+                                    </td>
+                                </tr>
+
+                                <!-- Modal para cada usuario -->
+                                <dialog class="modal" id="myDialog{{ cicla.usuariousuario }}">
+                                    <h2 class="titulo-modal">Ver ubicación de la cicla</h2>
+                                    <div class="map" id="map{{ cicla.usuariousuario }}"></div>
+                                    <script>
+                                        // Inicializa el mapa para cada modal
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            var mapId = 'map{{ cicla.usuariousuario }}';
+                                            var map = L.map(mapId, {
+                                                center: [7.8891, -72.4967],
+                                                zoom: 10,
+                                                layers: [
+                                                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                                        attribution: '© OpenStreetMap'
+                                                    })
+                                                ],
+                                                preferCanvas: true // Opcional: Mejora la velocidad de renderizado en grandes cantidades de datos.
+                                            });
+
+                                            // Generar coordenadas aleatorias dentro de Norte de Santander
+                                            function generarCoordenadasAleatorias() {
+                                                var latMin = 7.0, latMax = 8.5;
+                                                var lonMin = -73.5, lonMax = -72.0;
+
+                                                var latAleatoria = Math.random() * (latMax - latMin) + latMin;
+                                                var lonAleatoria = Math.random() * (lonMax - lonMin) + lonMin;
+
+                                                return { lat: latAleatoria, lon: lonAleatoria };
+                                            }
+
+                                            // Función para obtener la dirección a partir de coordenadas
+                                            function obtenerDireccion(lat, lon) {
+                                                var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+
+                                                fetch(url)
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data && data.display_name) {
+                                                            map.setView([lat, lon], 13);
+
+                                                            var marker = L.marker([lat, lon]).addTo(map)
+                                                                .bindPopup(`Ubicación de la bicicleta: ${data.display_name}`)
+                                                                .openPopup();
+                                                        } else {
+                                                            alert('No se encontró una dirección válida para estas coordenadas.');
+                                                        }
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error al obtener la dirección:', error);
+                                                    });
+                                            }
+
+                                            // Generar coordenadas aleatorias y mostrar la dirección
+                                            var coordenadas = generarCoordenadasAleatorias();
+                                            obtenerDireccion(coordenadas.lat, coordenadas.lon);
+                                        });
+                                    </script>
+                                    <div class="form-buttons">
+                                        <button type="button" class="closeDialog">Cerrar</button>
+                                    </div>
+                                </dialog>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+
 </body>
+
 </html>

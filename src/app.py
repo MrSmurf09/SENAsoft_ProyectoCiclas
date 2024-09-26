@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import bcrypt
 import os
 import time
@@ -248,7 +248,22 @@ def InicioAdmin():
 # --------------------------------------------------Ciclas Admin
 @app.route('/admin/ciclas')
 def CiclasAdmin():
-    return render_template('CiclasAdmin.html')
+    cursor = db.database.cursor(dictionary=True)
+    cursor.execute("""SELECT
+                        us.usuariousuario,
+                        ci.marcacicla,
+                        ci.colorcicla,
+                        ci.estadocicla,
+                        al.cobroalquiler,
+                        al.fechaalquiler,
+                        al.fechapagoalquiler,
+                        al.estadoalquiler
+                        FROM alquiler as al
+                        INNER JOIN cicla as ci ON ci.idcicla = al.cicla_idcicla
+                        INNER JOIN usuario as us ON us.numerodocumentousuario = al.usuario_numerodocumentousuario
+                        WHERE al.estadoalquiler = 'En Deuda'""")
+    ciclas = cursor.fetchall()
+    return render_template('CiclasAdmin.html', ciclas=ciclas)
 # --------------------------------------------------- Eventos Admin
 @app.route('/admin/eventos')
 def EventosAdmin():
